@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+    background-color: rgb(54, 54, 54);
+    overflow-x: hidden;
+}
+
+li{
+    list-style: none;
+}
+
+nav{
+    color: #fff;
+    position: fixed;
+    top: 60%;
+    left: 2%;
+    text-transform: uppercase;
+}
+
+nav li{
+    margin: 2rem 0;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all .3s ease-out .1s;
+    transform: translateX(-100%);
+}
+
+.show-nav + nav li{
+    transform: translateX(0px);
+    transition: all .3s ease-out .4s;
+}
+
+nav li + li{
+    margin-left: 1rem;
+    transform: translateX(-150%);
+}
+
+nav li + li + li{
+    margin-left: 2rem;
+    transform: translateX(-200%);
+}
+
+.fas{
+    margin-right: .6rem;
+}
+
+
+.container{
+    transform-origin: top left;
+    background-color: #fff;
+    transition: transform .6s ease-in-out;
+    box-shadow: -1rem 1rem 3rem 10px #000;
+    z-index: 4;
+}
+
+.container.show-nav{
+    transform: rotate(-20deg);
+}
+
+.content{
+    width: 80%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 6rem 0;
+}
+
+.container h3{
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+p{
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.9rem;
+    margin: 2rem 0;
+}
+
+.author{
+    font-style: italic;
+    font-size: 1rem;
+    margin: 0;
+}
+
+h4{
+    margin: 1rem 0;
+    font-size: 1.4rem;
+}
+
+img{
+    width: 100%;
+}
+
+.circle{
+    height: 13rem;
+    width: 13rem;
+    background-color: rgb(142, 60, 180);
+    border-radius: 50%;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    transition: all .3s ease-in-out;
+}
+
+.show-nav .circle{
+    transform: translate(-50%, -50%) rotate(-70deg); 
+}
+
+.menu{
+    position: absolute;
+    top: 60%;
+    left: 57%;
+    cursor: pointer;
+}
+
+.line{
+    display: block;    
+    width: 1.8rem;
+    height: .235rem;
+    margin: .3rem 0;
+    background-color: rgb(255, 255, 255);
+}
+
+.close{
+    position: absolute;
+    top: 58%;
+    left: 25%;
+    cursor: pointer;
+}
+
+.close-line{
+    display: block;
+    width: 2rem;
+    height: .3rem;
+    margin: .3rem 0;
+    background-color: rgb(255, 255, 255);
+}
+
+.close-line:first-child{
+    transform: rotate(45deg) translate(4px , 5px);
+}
+
+.close-line:nth-child(2){
+    transform: rotate(-45deg) translate(2px, -3px);
+}
