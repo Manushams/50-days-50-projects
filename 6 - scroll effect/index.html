@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Effect</title>
+
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+        .container{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card{
+            background-color: teal;
+            width: 22rem;
+            height: 12rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 1rem;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.463);
+            transition: all .3s ease;
+        }
+
+        .show{
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scroll to see the animation</h1>
+        <div class="card">
+            <h2>Content</h2>
+        </div>
+    </div>
+</body>
+    <script>
+        const container = document.querySelector('.container'), 
+            screenSeen = window.innerHeight /5 * 4;
+
+        for(let i = 0; i < 15; i++){
+            const div = document.createElement('div'),
+                h2 = document.createElement('h2');
+            h2.innerText = 'Content';
+            div.classList.add('card');
+            div.appendChild(h2);  
+            container.appendChild(div)          
+        };
+
+        cards = document.querySelectorAll('.card');
+        hideCards();
+
+        function hideCards(){
+            cards.forEach((card, i) => {
+                if(card.getBoundingClientRect().top > screenSeen){
+                    card.style.opacity = 0;
+                    card.style.pointerEvents = 'none';
+                    if(i % 2)card.style.transform = 'translateX(-100%)';
+                    else card.style.transform = 'translateX(100%)'
+                }
+            })
+        }
+
+        window.addEventListener('scroll', () => {
+            hideCards();
+            showCards();
+        })
+
+        function showCards(){
+            cards.forEach(card => {
+                if(card.getBoundingClientRect().top < screenSeen){
+                    card.style.transform = 'translateX(0%)';
+                    card.style.opacity = 1;
+                    card.style.pointerEvents = 'all';
+                }
+            })
+        }
+
+    </script>
+</html
