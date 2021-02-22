@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            text-align: center;
+            background: rgb(233, 231, 231);
+        }
+
+        .container{
+            width: 80%;
+            max-width: 40rem;
+            margin: 2rem auto;
+        }
+
+        .container h3{
+            font-size: 2rem;
+        }
+
+        .summary{
+            margin-top: 1.3rem;
+            text-align: start;
+            background: rgb(243, 238, 238);
+            padding: 2rem 3rem 2rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.192);
+            position: relative;
+            font-size: 1.3rem;
+            border: 1px solid rgb(185, 185, 185);
+        }
+
+        .open{
+            background: #fff;
+        }
+
+        .close{
+            position: absolute;
+            top: 2rem;
+            right: 1rem;
+            font-size: 1.3rem;
+            font-weight: bolder;
+            background: rgb(185, 185, 185);
+            border-radius: 50%;
+            padding: 0rem .4rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .details{
+            display: none;
+            margin-top: 1.4rem;
+            font-size: 1.1rem;
+        }
+
+        .show{
+            display: block;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Frequently Asked Questions</h3>
+
+        <div class="summary">
+            <h4>Why shouldn't we trust atoms?</h4>
+            <span class="close">&#8681;</span>
+            <div class="details">
+                <p>They make up everything</p>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h4>What do you call someone with no body and no nose?</h4>
+            <span class="close">&#8681;</span>
+            <div class="details">
+                <p>Nobody knows</p>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h4>What's the object-oriented way to become wealthy?</h4>
+            <span class="close">&#8681;</span>
+            <div class="details">
+                <p>Inheritance.</p>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h4>How many tickles does it take to tickle an octopus?</h4>
+            <span class="close">&#8681;</span>
+            <div class="details">
+                <p>Ten-tickles!</p>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h4>What is: 1 + 1?</h4>
+            <span class="close">&#8681;</span>
+            <div class="details">
+                <p>Depends on who are you asking.</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const closeBtns = document.querySelectorAll('.close'),
+        details = document.querySelectorAll('.details'),
+        summaries = document.querySelectorAll('.summary'),
+        icons = ['&#8681;', '&times;'];
+
+    closeBtns.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            details[i].classList.toggle('show');
+            summaries[i].classList.toggle('open')
+            if(details[i].classList.contains('show'))btn.innerHTML = icons[1];
+            else{btn.innerHTML = icons[0]}
+        })
+    })
+</script>
+
+</html>
