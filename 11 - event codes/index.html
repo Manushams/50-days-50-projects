@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key codes</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            background-color: rgb(224, 224, 224);
+        }
+
+        .container{
+            /* width: 50%;
+            max-width: 1000px; */
+            width: clamp(10rem, 70%, 50rem);
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .box{
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        .box > div{
+            width: 12em;
+            height: 6rem;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: .5px solid rgb(134, 134, 134);
+        }
+
+        .hide{
+            display: none;
+        }
+
+        .start{
+            padding: 1rem 2rem;
+            background: #fff;
+            border: 1px solid rgb(146, 146, 146);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+
+        <h3 class="start">
+            Press any key to get the code.
+        </h3>
+
+        <div class="box hide">
+            <h3>event.key</h3>
+            <div>
+                <h2 class="event-key"></h2>
+            </div>
+        </div>
+        <div class="box hide">
+            <h3>event.keyCode</h3>
+            <div>
+                <h2 class="event-key-code"></h2>
+            </div>
+        </div>
+        <div class="box hide">
+            <h3>event.code</h3>
+            <div>
+                <h2 class="event-code"></h2>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+<script>
+    const eventKey = document.querySelector('.event-key'),
+        eventKeyCode = document.querySelector('.event-key-code'),
+        eventCode = document.querySelector('.event-code'),
+        boxes = document.querySelectorAll('.box'),
+        start = document.querySelector('.start')
+    let pressed = false
+
+    document.addEventListener('keydown', (e) => {
+        pressed = true
+        if(pressed) showBoxes();
+        eventKey.innerText = e.key === ' ' ? 'Space' : e.key;
+        eventKeyCode.innerText = e.keyCode;
+        eventCode.innerText = e.code;
+    })
+
+    function showBoxes(){
+        start.classList.add('hide')
+        boxes.forEach(b => b.classList.remove('hide'))
+    }
+</script>
+
+</html>
