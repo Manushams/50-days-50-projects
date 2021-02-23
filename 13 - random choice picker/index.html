@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Choice Picker</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            background: rgb(30, 153, 235);
+        }
+
+        .container{
+            max-width: 30rem;
+            width: 80%;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h3{
+            text-align: center;
+        }
+
+        textarea{
+            margin: 1rem 0;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.2rem;
+        }
+
+        .choices{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .choice{
+            padding: .5rem 1rem;
+            background: coral;
+            margin-right: .5rem;
+            color: #fff;
+            border-radius: .5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Enter all of the choices divided by a comma (','). <br>
+            Press enter when you're done.
+        </h3>
+        <textarea 
+            placeholder="Enter choices here..."
+            cols="70" 
+            rows="5"
+            ></textarea>
+        <div class="choices"></div>
+    </div>
+</body>
+<script>
+    const choicesDiv = document.querySelector('.choices'),
+        textarea = document.querySelector('textarea');
+    let choices = null
+    textarea.addEventListener('keyup', (e) => {
+        choices = e.target.value
+                            .trim()
+                            .split(',')
+                            .filter(c => c !== ' ' && c !== '')
+                            .map(c => c.trim());
+        console.log(choices)
+    })
+</script>
+</html>
