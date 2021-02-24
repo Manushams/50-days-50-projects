@@ -9,6 +9,7 @@
         *{
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body{
@@ -34,6 +35,7 @@
             padding: 1rem;
             width: 100%;
             font-size: 1.2rem;
+            display: block;
         }
 
         .choices{
@@ -49,6 +51,10 @@
             color: #fff;
             border-radius: .5rem;
         }
+
+        .selected{
+            background: rgb(24, 40, 92);
+        }
     </style>
 </head>
 <body>
@@ -58,23 +64,70 @@
         </h3>
         <textarea 
             placeholder="Enter choices here..."
-            cols="70" 
             rows="5"
             ></textarea>
         <div class="choices"></div>
     </div>
 </body>
+
 <script>
+
     const choicesDiv = document.querySelector('.choices'),
         textarea = document.querySelector('textarea');
-    let choices = null
+    let choices = null,
+        unselTimeout;
+    
     textarea.addEventListener('keyup', (e) => {
-        choices = e.target.value
-                            .trim()
-                            .split(',')
-                            .filter(c => c !== ' ' && c !== '')
-                            .map(c => c.trim());
-        console.log(choices)
+        choices = textarea.value.split(',').filter(c => c.trim() !== '').map(c => c.trim());
+        createTags(choices);
+
+        if(e.keyCode === 13){
+            choices.length && select()
+            reset();        
+        };
     })
+
+    function reset(){
+        textarea.value = null;
+    }
+
+    function createTags(choices){
+        choicesDiv.innerHTML = '';
+        choices.forEach(choice => {
+            const span = document.createElement('span');
+            span.classList.add('choice');
+            span.innerText = choice;
+
+            choicesDiv.appendChild(span);
+        });
+    }
+
+    function select(){
+        const choicesSpan = document.querySelectorAll('.choice');
+        let count = 0;
+        
+        textarea.value = null;
+        const selectInterval = setInterval(() => {
+            count++
+            choiceSpan = choicesSpan[Math.floor(Math.random() * (choicesSpan.length))]
+
+            choiceSpan.classList.add('selected');
+            unselect(choiceSpan)      
+
+            if(count > 30){ 
+                clearInterval(selectInterval);
+                clearInterval(unselTimeout);
+                choiceSpan.classList.add('selected')
+            };
+        }, 100);
+
+    }
+
+    function unselect(span){
+        unselTimeout = setTimeout(() => {
+            span.classList.remove('selected');
+        }, 100);
+    }
+
 </script>
 </html>
