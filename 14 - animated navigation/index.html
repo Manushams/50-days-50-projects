@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Navigation</title>
+</head>
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body{
+        overflow-x: hidden;
+    }
+
+    .container{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50vh;
+        z-index: -1;
+        background: #fff;
+    }
+    .container::after{
+        content: '';
+        position: absolute;
+        top: 50vh;
+        left: 0;
+        right: 0;
+        height: 50vh;
+        z-index: -1;
+        background: rgb(66, 135, 226);
+    }
+
+    nav{
+        box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.452);
+        background: #fff;
+        padding: 1rem 2rem;
+        border-radius: .2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 1s ease-in-out;
+        width: 23rem;
+        position: relative;
+    }
+
+    nav.hide{
+        width: 6rem;
+    }
+
+    .navbar-nav{
+        display: flex;
+        list-style: none;
+        transition: all 1s ease-in-out;
+    }
+
+    .hide .navbar-nav{
+        transform: translateX(10rem);
+    }
+
+    .nav-link{
+        margin-right: 1.4rem;
+        transition: all 1s ease-in-out;
+    }
+
+    .hide .nav-link{
+        transform: rotateY(765deg);
+        opacity: 0;
+    }
+
+    .menu{
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 2;
+        transition: all 1s ease-in-out;
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .hide .menu{
+        transform: translate(-1.3rem, -.4rem);
+    }
+
+    .line{
+        width: 1.5rem;
+        height: .2rem;
+        background: rgb(64, 64, 201);
+        margin: .1rem 0;
+        transition: all ease-in-out 1s;
+    }
+
+    .line1{
+        transform: rotate(1125deg) translate(2px, 3px);
+    }
+
+    .line2{
+        transform: rotate(-1125deg) translate(1px, -3px);
+    }
+</style>
+<body>
+    
+    <div class="container">
+
+        <nav >
+            <ul class="navbar-nav">
+                <li class="nav-link">Home</li>
+                <li class="nav-link">Works</li>
+                <li class="nav-link">About</li>
+                <li class="nav-link">Contact</li>
+            </ul>
+            
+            <div class="menu">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+            </div>
+        </nav>
+
+    </div>
+
+</body>
+<script>
+    const nav = document.querySelector('nav'),
+        menu  = document.querySelector('.menu'),
+        lines = document.querySelectorAll('.line')
+
+    menu.addEventListener('click', () => {
+        nav.classList.toggle('hide');
+        lines[0].classList.toggle('line1');
+        lines[1].classList.toggle('line2');
+    })
+
+
+</script>
+</html>
