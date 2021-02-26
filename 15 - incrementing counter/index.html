@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incrementing Counter</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
     <style>
         @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
-        *{
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body{
+        body {
             background: rgb(149, 17, 201);
             font-family: 'Muli', sans-serif;
         }
 
-        .container{
+        .container {
             width: 100%;
             height: 100vh;
             display: flex;
@@ -28,7 +32,7 @@
             flex-wrap: wrap;
         }
 
-        .card{
+        .card {
             margin-right: 1.5rem;
             display: flex;
             flex-direction: column;
@@ -36,15 +40,15 @@
             color: #fff;
         }
 
-        .card i{
+        .card i {
             font-size: 4rem;
             color: #fff;
         }
-
     </style>
 </head>
+
 <body>
-    
+
     <div class="container">
 
         <div class="card">
@@ -52,7 +56,7 @@
             <h2 class="number-yt"></h2>
             <h4>Youtube subscribers</h4>
         </div>
-        
+
         <div class="card">
             <i class="fab fa-twitter-square"></i>
             <h2 class="number-tw"></h2>
@@ -64,7 +68,7 @@
             <h2 class="number-fb"></h2>
             <h4>Facebook Fans</h4>
         </div>
-        
+
     </div>
 
 </body>
@@ -76,39 +80,49 @@
         tw = document.querySelector('.number-tw'),
         yt = document.querySelector('.number-yt');
     let twCurrent = 0,
+        fbCurrent = 0,
+        ytCurrent = 0,
         fakeCounter = 0;
-   
 
-   function rate(count){
-       return 2000 / (count/1000)
-   }
 
-   function fake(){
-       const int = setInterval(() => {
-           fakeCounter +=11;
-           if(fakeCounter > 1000)fakeCounter = 0;
-       }, 10);
-       setTimeout(() => {
-           clearInterval(int);
-           fakeCounter = '000'
-       }, 2000);
-   }
+    function rate(count) {
+        return 2000 / (count / 1000)
+    }
 
-   fake()
+    function fake() {
+        const int = setInterval(() => {
+            fakeCounter += 11;
+            if (fakeCounter > 1000) fakeCounter = 0;
+        }, 10);
+        setTimeout(() => {
+            clearInterval(int);
+            fakeCounter = '000'
+        }, 2000);
+    }
 
-   
+    fake()
 
-   const int = setInterval(() => {
-        twCurrent++;
-        if(fakeCounter >= 1000)fakeCounter = 0;
-        if(twCurrent === twCounter/1000)clearInterval(int);   
-   }, rate(twCounter));
+    function counter(current, mediaCounter, html) {
+        const int = setInterval(() => {
+            current++;
+            if (fakeCounter >= 1000) fakeCounter = 0;
+            if (current >= Math.floor(mediaCounter / 1000)) clearInterval(int);
+        }, rate(mediaCounter));
 
-   const int2 = setInterval(() => {
 
-    tw.innerText = `${twCurrent}${fakeCounter}`
+        const int2 = setInterval(() => {
+            html.innerText = `${current}${fakeCounter}`
+        }, 10);
 
-   }, 10);
+        setTimeout(() => {
+            clearInterval(int2)
+            html.innerText = mediaCounter
+        }, 2000);
+    }
 
+    counter(twCurrent, twCounter, tw);
+    counter(fbCurrent, fbCounter, fb);
+    counter(ytCurrent, ytCounter, yt);
 </script>
+
 </html>
