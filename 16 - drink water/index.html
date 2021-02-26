@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drink Water</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all .3s ease-in-out;
+        }
+
+        body{
+            background-color: #3494e4;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            max-width: 30rem;
+            margin: auto;
+            text-align: center;
+            color: #fff;
+            padding: 2rem 0;
+        }
+
+        .main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main h3{
+            font-size: 2rem;
+        }
+
+        .main h4{
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .big-bottle{
+            height: 20em;
+            width: 9.5em;
+            background-color: #6ab3f8;
+            border: #144fc6 4px solid;
+            border-radius: 0 0 40px 40px ;
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .remained, .drank{
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .remained{
+            background-color: #fff;
+            color: rgb(76, 76, 194);
+            font-size: .8rem;
+        }
+        .remained p:first-child{
+            font-size: 1.3rem;
+            font-weight: 900;
+        }
+
+        .drank{
+            font-size: 2rem;
+            color: rgba(6, 6, 224, 0.637);
+            font-weight: 900;
+        }
+
+        .select{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .small-bottles{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 1em;
+            max-width: 70%;
+        }
+
+        .sm-bottle{
+            height: 7rem;
+            width: 3rem;
+            margin: 1rem ;
+            background-color:#fff;
+            border: #144fc6 4px solid;
+            color: rgb(0, 81, 255);
+            border-radius: 0 0 20px 20px ;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+        }
+
+        .bg-blue{
+            background-color:  #6ab3f8;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <h3>Drink Water</h3>
+            <h4>Goal: 2 Liters</h4>
+
+            <div class="big-bottle">
+
+                <div class="remained">
+                    <p><span class="remained-liters">1</span>L <br></p>
+                    <p class="description">Remained</p>
+                </div>
+
+                <div class="drank">
+                    <p>
+                        <span class="drank-perc">50</span>%
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="select">
+            <h4>Select how many glasses of water that you have drank</h4>
+
+            <div class="small-bottles">
+            
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+                <div class="sm-bottle">
+                    <p>250<br>ml</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    const smBottles = Array.from(document.querySelectorAll('.sm-bottle')),
+        drank = document.querySelector('.drank'),
+        remained = document.querySelector('.remained'),
+        drankPerc = document.querySelector('.drank-perc'),
+        remainedLiters = document.querySelector('.remained-liters')
+    let amountDrank = 0,
+        bottleNumber = null;
+
+
+    smBottles.forEach((bottle, i) => {
+        bottle.addEventListener('click', () => {
+            bottleNumber = i;
+            changeBg();
+            amountOfWater()
+        })
+    })
+
+    function changeBg(){
+        smBottles.slice(0, bottleNumber + 1).forEach(b => b.classList.add('bg-blue'));
+        smBottles.slice(bottleNumber + 1).forEach(b => b.classList.remove('bg-blue'));
+        amountDrank = ((bottleNumber+1) * 25)/2
+    }
+
+    function amountOfWater(){
+        drank.style.height = amountDrank + '%';
+        drankPerc.innerText = amountDrank;
+        remained.style.height = 100 - amountDrank + '%'
+        remainedLiters.innerText = ((100 - amountDrank)/100)*2
+    }
+
+</script>
+</html>
