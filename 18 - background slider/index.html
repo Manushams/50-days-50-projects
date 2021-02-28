@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Slider</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container{
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-image: url(img/pexels-asad-photo-maldives-3293148.jpg);
+            background-size: cover;
+            background-position: center center;
+            transition: all .5s ease-in-out;
+        }
+
+        .container::before{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .img-container{
+            width: 60%;
+            height: 60%;
+            overflow: hidden;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            z-index: 2;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.959);
+        }
+
+        img{
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: absolute;
+            object-position: center center;
+            transform: translate(-20%, -20%); 
+            transition: all 1s ease-in-out;
+        }
+
+        .left, .right{
+            position: absolute;
+            color: #fff;
+            top: 50%;
+            z-index: 5;
+            transform: translateY(-50%);
+            border: 1px solid rgb(255, 188, 6);
+            padding: 0 .3rem .3rem .5rem;
+            border-radius: .5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .left{
+            transform: translate(-100%, -50%);
+            border-right: none;
+        }
+
+        .right{
+            border-left: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="img-container">
+            <img src="img\pexels-asad-photo-maldives-3293148.jpg" alt="">
+        </div>
+        <h1 class="left">&larr;</h1>
+        <h1 class="right">&rarr;</h1>
+    </div>
+</body>
+
+<script>
+    const images = [
+        'img/pexels-asad-photo-maldives-3293148.jpg', 
+        'img/pexels-jaymantri-4827.jpg',
+        'img/pexels-jeremy-bishop-2422915.jpg',
+        'img/pexels-luis-del-río-15286.jpg',
+        'img/pexels-no-name-66997.jpg'
+        ],
+        img = document.querySelector('img'),
+        container = document.querySelector('.container'),
+        imgContainer = document.querySelector('.img-container'),
+        left = document.querySelector('.left'),
+        right = document.querySelector('.right');
+    let counter = 0;
+    setArrowPos();
+    
+    function setArrowPos(){
+        const xPos = imgContainer.getBoundingClientRect().left; 
+
+        left.style.left = xPos + 'px';
+        right.style.left = xPos + imgContainer.offsetWidth + 'px';
+    }
+
+    window.addEventListener('resize', () => setArrowPos());
+
+    left.addEventListener('click', () => {
+        counter = counter === 0 ? 4 : counter-1;
+        img.src = images[counter];
+        container.style.backgroundImage = `url(${images[counter]})`
+    })
+
+    right.addEventListener('click', () => {
+        counter = counter === 4 ? 0 : counter+1;
+        img.src = images[counter];
+        container.style.backgroundImage = `url(${images[counter]})`
+    })
+</script>
+
+</html>
