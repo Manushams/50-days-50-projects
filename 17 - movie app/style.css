@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+:root {
+    --primary-color: #22254b;
+    --secondary-color: #373b69;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--primary-color);
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nav{
+    height: 5rem;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    background-color: var(--secondary-color);
+    justify-content: flex-end;
+    align-items: center;
+}
+
+input{
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid var(--primary-color);
+    padding: 8px 0px 8px 10px;
+    border-radius: 1000px;
+    font-size: 1.1rem;
+    color: #7a80ce;
+}
+
+input::placeholder{
+    color: #7a80ce;
+}
+
+.card{
+    max-height: 32rem;
+    max-width: 19rem;
+    overflow: hidden;
+    margin: 1rem;
+    position: relative;
+}
+
+.card:hover .card-overview{
+    transform: translateY(-100%);
+}
+
+.card-img{
+    width: 100%;
+    max-height: 28rem;
+}
+
+.card-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-details{
+    background-color: var(--secondary-color);
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: bold;
+    min-height: 4rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-details .rating{
+    background-color: var(--primary-color);
+    padding: .3rem;
+    color: rgb(219, 154, 33);
+}
+
+.card-overview{
+    background-color: #fff;
+    padding: 2rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: all .3s ease-in-out;
+    position: absolute;
+}
+
+.card-overview h4{
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.card-overview .overview-text{
+    line-height: 1.5;
+}
+
+
+
