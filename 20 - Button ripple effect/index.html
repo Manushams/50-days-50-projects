@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button ripple effect</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        .wrapper{
+            padding: 1rem 2rem;
+            background-color: rgb(120, 14, 134);
+            overflow: hidden;
+            user-select: none;
+            position: relative;
+            cursor: pointer;
+        }
+
+        button{
+            background-color: transparent;
+            color: #fff;
+            outline: none;
+            border: none;
+            font-size: 1.3rem;
+            letter-spacing: .1rem;
+            text-transform: uppercase;
+        }
+
+        .circle{
+            content: '';
+            background-color: transparent;
+            width: 0px;
+            height: 0px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            box-shadow: inset 0 0 60px 40px rgba(255, 255, 255, 0.521);
+            border-radius: 50%;
+            z-index: 5;
+        }
+
+        .ripple{
+            animation: expand .5s linear forwards;
+        }
+
+        @keyframes expand{
+            from{
+                width: 0px;
+                height: 0px;
+            }
+
+            to{
+                width: 370px;
+                height: 370px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <button>Click Me</button>
+        <span class="circle"></span>
+    </div>
+
+</body>
+<script>
+    const btn = document.querySelector('.wrapper'),
+        circle = document.querySelector('.circle')
+
+    btn.addEventListener('click', (e) => {
+
+        if(!circle.classList.contains('ripple')){
+            const btnX = btn.getBoundingClientRect().left,
+                btnY = btn.getBoundingClientRect().top;
+            let xPos = e.pageX - btnX,
+                yPos = e.pageY - btnY;
+
+            circle.style.top = yPos + 'px';
+            circle.style.left = xPos + 'px';
+            circle.classList.add('ripple')
+            setTimeout(() => {
+                circle.classList.remove('ripple')
+            }, 550);
+        }
+    })
+</script>
+</html>
