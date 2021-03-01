@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Clock</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+        :root{
+            --primary-color: #fff;
+            --secondary-color: #000
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all .3s ease-in-out;
+        }
+
+        body{
+            background-color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .container{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button{
+            outline: none;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: .5rem 1rem;
+            border-radius: 5px;
+            transform: translateY(-2rem);
+            cursor: pointer;
+        }
+
+        .clock{
+            width: 100%;
+            height: 100%;
+        }
+
+        .time{
+            font-size: 5rem;
+            transform: translateY(6rem);
+            color: var(--secondary-color);
+        }
+
+        .day{
+            transform: translateY(6rem);
+            color: var(--secondary-color);
+        }
+
+        .day span{
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0 6px;
+            border-radius: 50%;
+        }
+
+        .seconds, .hours, .minutes{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(0, -50%);
+            border-radius: 5px;
+        }
+
+        .seconds{
+            width: 130px;
+            height: 4px;
+            background-color: rgb(243, 77, 0);
+            transform-origin: left center;
+            z-index: 2;
+        }
+
+        .seconds::before{
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            z-index: 5;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            border-radius: 50%;
+            border: 3px solid rgb(243, 77, 0);
+            transform: translate(-50%, -50%);
+        }
+
+        .minutes{
+            width: 130px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transform-origin: left center;
+        }
+
+        .hours{
+            width: 100px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transform-origin: left center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="btn-container">
+            <button>Dark Mode</button>
+        </div>
+        <div class="clock">
+            <div class="seconds"></div>
+            <div class="minutes"></div>
+            <div class="hours"></div>
+        </div>
+        <div class="time">14:02</div>
+        <div class="day">Monday, March <span>1</span></div>
+    </div>
+</body>
+
+<script>
+    const secondNeedle = document.querySelector('.seconds'),
+        minuteNeedle = document.querySelector('.minutes'),
+        hourNeedle = document.querySelector('.hours'),
+        root = document.documentElement,
+        btn = document.querySelector('button');
+    console.log(root)
+        
+    setInterval(() => {
+        const newDate = new Date(),
+            hour = newDate.getHours(),
+            minutes = newDate.getMinutes(),
+            seconds = newDate.getSeconds();
+            
+        secondNeedle.style.transform = `rotate(${seconds*6 - 90}deg)`;
+        minuteNeedle.style.transform = `rotate(${minutes*6 - 90}deg)`;
+        hourNeedle.style.transform = `rotate(${(hour%12)*30 - 90}deg)`
+        
+    }, 1000);
+
+    btn.addEventListener('click', () => {
+        btn.classList.toggle('dark');
+
+        if(btn.classList.contains('dark')){
+            root.style.setProperty('--primary-color', '#000');
+            root.style.setProperty('--secondary-color', '#fff');
+        }else{
+            root.style.setProperty('--primary-color', '#fff');
+            root.style.setProperty('--secondary-color', '#000');
+        }
+    })
+
+</script>
+</html>
