@@ -18,17 +18,18 @@
 
         .container{
             width: 100%;
-            min-height: 100vh;
+            min-height: 70vh;
             display: flex;
             align-items: center;    
-            justify-content: center;
+            justify-content: start;
+            flex-wrap: wrap;
         }
 
         .box{
             width: 200px;
             height: 150px;
             background-color: #fff;
-            margin-right: 1rem;
+            margin: 1rem;
             padding: 5px;
         }
 
@@ -58,8 +59,9 @@
         <div class="box"></div>
         <div class="box"></div>
         <div class="box"></div>
-        <div class="box"></div>
     </div>
+
+    <div id="myID"></div>
 </body>
 <script>
     const boxes = Array.from(document.querySelectorAll('.box')),
@@ -67,7 +69,6 @@
 
     fill.addEventListener('dragstart', dragStart);
     fill.addEventListener('dragend', dragEnd);
-
     
     function dragStart(){
         setTimeout(() => this.classList.add('invisible'), 0);
