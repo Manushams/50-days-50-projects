@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinetic Loader</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background: rgb(48, 42, 75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .kinetic{
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .kinetic::before,
+        .kinetic::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-bottom-color: #fff;
+        }
+
+        .kinetic::before{
+            animation: kinA 2s infinite linear .5s ;
+        }
+
+        .kinetic::after{
+            transform: rotate(90deg);
+            animation: kinB 2s infinite linear;
+        }
+
+        @keyframes kinA{
+            0%,25%{
+                transform: rotate(0deg);
+            }
+
+            50%, 75%{
+                transform: rotate(180deg);
+            }
+
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes kinB{
+            0%,25%{
+                transform: rotate(90deg);
+            }
+
+            50%, 75%{
+                transform: rotate(270deg);
+            }
+
+            100%{
+                transform: rotate(450deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="kinetic"></div>
+
+</body>
+</html>
