@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast Notification</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(124, 18, 223);
+        }
+
+        button{
+            padding: 1rem 2rem;
+            outline: none;
+            border: none;
+            color: rgb(124, 18, 223);
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        .notifications{
+            position: absolute;
+            right: 0;
+            width: 11rem;
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            flex-direction: column;
+            padding-right: 1rem;
+            overflow: hidden;
+        }
+
+        .notification{
+            margin-bottom: .5rem;
+            background-color: #fff;
+            padding: 1rem 1rem;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button>Notification</button>
+    </div>
+    
+    <div class="notifications"></div>
+</body>
+<script>
+    const button = document.querySelector('button'),
+        nums = ['one', 'two', 'three', 'four'],
+        notifications = document.querySelector('.notifications')
+
+    button.addEventListener('click', () => {
+        const num = nums[Math.floor(Math.random() * 4)],
+            div = document.createElement('div'),
+            h4 = document.createElement('h4');
+
+        h4.innerText = `Message ${num}`
+        div.classList.add('notification');
+        div.appendChild(h4);
+        notifications.appendChild(div)
+
+        setTimeout(() => {
+            div.remove()
+        }, 3000);
+    })
+
+
+</script>
+</html>
