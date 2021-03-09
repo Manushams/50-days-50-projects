@@ -58,7 +58,8 @@
         .output p{
             font-size: 1.3rem;
             word-break: break-all;
-            width: calc(100% - 3rem);
+            margin-left: .2rem;
+            width: calc(100% - 3.2rem);
         }
 
         form{
@@ -76,19 +77,29 @@
 
         input[type=number]{
             width: 20%;
+            min-width: 3rem;
             height: 1.5rem;
             font-size: 1rem;
-            padding-left: .6rem;
-        }
-
-        input[type = checkbox]{
-            width: 1.3rem;
-            height: 1.3rem;
+            padding-left: .2rem;
         }
 
         button{
             padding: .5rem 0;
             cursor: pointer;
+        }
+
+        .copied{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.913);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+        }
+
+        .hide{
+            display: none;
         }
     </style>
 </head>
@@ -120,32 +131,35 @@
                 <input 
                     type="checkbox"
                     checked
+                    id="uppercase"
                 >
             </div>
 
             <div class="input-field">
                 <label for="lowercase">Include lowercase letters
                 </label>
-                <input type="checkbox" checked>
+                <input type="checkbox" id="lowercase" checked>
             </div>
 
             <div class="input-field">
                 <label for="length">Include numbers
                 </label>
-                <input type="checkbox" checked>
+                <input type="checkbox" id="numbers" checked>
             </div>
 
             <div class="input-field">
                 <label for="length">Include symbols
                 </label>
-                <input type="checkbox" checked>
+                <input type="checkbox" id="symbols" checked>
             </div>
 
             <button class="submit">Generate Password</button>
         </form>
 
     </div>
-
+    <div class="copied hide">
+        <h3>Copied!</h3>
+    </div>
 </body>
 <script>
     const letters = 'abcdefghijklmnopqrstuvwxyz'.split(''),
@@ -153,27 +167,36 @@
         numbers = '1234567890'.split(''),
         lengthValue = document.querySelector('.length-input').value,
         output = document.querySelector('.output p'),
-        form = document.querySelector('form')
+        form = document.querySelector('form'),
+        copyBtn = document.querySelector('.copy-btn');
 
     let password = '',
         length = lengthValue;
 
-    function generatePassword(){
-        const chars = [...numbers, ...symbols, ...letters];
+    function generatePassword(obj){
+        const [includeUpper, includeLower, includeSym, includeNum] = [obj.uppercase, obj.lowercase, obj.symbols, obj.numbers],
+            chars = [];
+        if(includeLower || includeUpper)chars.push(...letters);
+        if(includeSym)chars.push(...symbols);
+        if(includeNum)chars.push(...numbers);
+
         password += chars[Math.floor(Math.random() * chars.length)];
 
         length--;
 
-        if(length !== 0)generatePassword();
-        else{uppercase()}
+        if(length !== 0)generatePassword(obj);
+        else if(includeUpper && !includeLower)uppercase(includeUpper);
+        else if(includeUpper)uppercase();
     }
 
     function isLetter(str) {
         return str.length === 1 && str.match(/[a-z]/i);
     }
 
-    function uppercase(){
+    function uppercase(includeOnlyUpper){
         password = password.split('').map((char, i) => {
+            if(includeOnlyUpper)return char.toUpperCase();
+
             if(isLetter(char)){
                 if(Math.random() > .5){
                     return char.toUpperCase()
@@ -184,20 +207,44 @@
         }).join('')
     }
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        reset()
-        generatePassword();
-        //generatePassword(uppercase, lowercase, symbols, numbers)
-        output.innerText = password
-
-    })
-
     function reset(){
         password = '';
         length = document.querySelector('.length-input').value;
     }
 
-</script>
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const checkboxes = Array.from(document.querySelectorAll('input')).filter(d => d.id);
+        reset();
+        let obj ={}
+        checkboxes.forEach(c => {
+            obj[c.id] = c.checked
+        })
+        generatePassword({...obj});
+        
+        if(!password.includes('undefined'))output.innerText = password;
+        
+    })
 
+    copyBtn.addEventListener('click', () => {
+        if(password.length)copy();
+    })
+
+    function copy(){
+        const el = document.createElement('textarea'),
+            copied = document.querySelector('.copied');
+
+        copied.classList.remove('hide');
+        setTimeout(() => {
+            copied.classList.add('hide');
+        }, 1000);
+
+        el.value =  document.querySelector('.output p').innerText;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    }
+
+</script>
 </html>
