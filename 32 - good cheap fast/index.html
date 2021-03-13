@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Cheap Fast</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toggle{
+            display: flex;
+            align-items: center;
+        }
+
+        .slider{
+            width: 6.5rem;
+            height: 3rem;
+            background-color:rgb(88, 35, 212);
+            border-radius: 10400px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .circle{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 2.3rem;
+            width: 2.3rem;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.663);
+            margin: 0 .3rem;
+            transition: all .3s ease-in-out;
+        }
+        
+        .switch{
+            left: 55%;            
+        }
+
+        p{
+            font-size: 1.5rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="toggle">
+            <div class="slider">
+                <div class="circle" id='good'></div>
+            </div>
+            <p>Good</p>
+        </div>
+        
+        <div class="toggle">
+            <div class="slider">
+                <div class="circle" id='cheap'></div>
+            </div>
+            <p>Cheap</p>
+        </div>
+        
+        <div class="toggle">
+            <div class="slider">
+                <div class="circle" id='fast'></div>
+            </div>
+            <p>Fast</p>
+        </div>
+        
+    </div>
+    
+</body>
+<script>    
+    const sliders = Array.from(document.querySelectorAll('.slider')),
+        circles = Array.from(document.querySelectorAll('.circle'));
+    
+    sliders.forEach((slider, i) => {
+        slider.addEventListener('click' , () => {
+            circles[i].classList.toggle('switch');
+
+            doTheTrick(circles[i])
+        })
+    })
+
+    function doTheTrick(circle){
+        if(isOn(circles[0]) && isOn(circles[1]) && isOn(circles[2])){
+            if(circle.id === 'good')circles[2].classList.remove('switch');
+            if(circle.id === 'cheap')circles[0].classList.remove('switch');
+            if(circle.id === 'fast')circles[1].classList.remove('switch');
+        }
+    }
+
+    function isOn(circle){
+        return circle.classList.contains('switch')
+    }
+</script>
+</html>
