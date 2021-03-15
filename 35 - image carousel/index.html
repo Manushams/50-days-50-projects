@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .container{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel{
+            width: 95%;
+            max-width: 30rem;
+            height: 35rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .img{
+            width: 100%;
+            height: 95%;
+            display: flex;
+            transition: all .3s ease-in-out;
+        }
+
+        .img img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center center;;
+        }
+
+        .buttons{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        button{
+            width: 49.5%;
+            padding: .5rem 0;
+            color: #fff;
+            background-color: rgb(133, 13, 202);
+            outline: none;
+            border: none;
+            cursor: pointer;
+            transition: .1s ease-in-out all;
+        }
+
+        button:active{
+            background-color: rgb(99, 8, 151);
+            transform: scale(.95);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="carousel">
+            
+            <div class="img">
+                <img src="https://images.unsplash.com/photo-1599394022918-6c2776530abb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1458&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1599423300746-b62533397364?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1599561046251-bfb9465b4c44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1492&q=80" alt="">
+            </div>
+
+            <div class="buttons">
+                <button class="prev">Prev</button>
+                <button class="next">Next</button>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+<script>
+    const prev = document.querySelector('.prev'),
+        next = document.querySelector('.next'),
+        imgContainer = document.querySelector('.img');
+
+    let position = 0;
+    next.addEventListener('click', () => {
+        if(position < -200)position = 0;
+        else{position -= 100}
+        transform(position)
+    })
+
+    prev.addEventListener('click', () => {
+        if(position >= 0)position = -300;
+        else{position += 100}
+        transform(position)
+    })
+
+    function transform(num){
+        imgContainer.style.transform = `translateX(${num}%)`
+    }
+
+    setInterval(() => {
+        if(position < -200)position = 0;
+        else{position -= 100}
+        transform(position)
+    }, 3000);
+
+    
+</script>
+</html>
