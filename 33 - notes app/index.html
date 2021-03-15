@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #7bdaf3;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button{
+            outline: none;
+            border: none;
+            padding: .4rem .6rem;
+            background-color: #9ec862;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 1rem;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            cursor: pointer;
+            transition: all .1s ease-in-out;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.232);
+        }
+
+        button:active{
+            transform: scale(.95);
+            background-color: #80a54d;
+        }
+
+        .container{
+            margin-top: 3.5rem;
+            padding: .5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .note{
+            min-width: 10rem;
+            width: 25rem;
+            max-width: 25rem;
+            height: 27rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.177);
+            margin: 0rem 2rem 2rem 0;
+        }
+
+        .topbar{
+            height: 3rem;
+            background-color: #9ec862;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+        }
+
+        .topbar i{
+            color: #fff;
+            margin-left: 1rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all .1s ease-in-out;
+        }
+
+        form{
+            height: calc(100% - 3rem);
+            max-height: calc(100% - 3rem);
+            max-width: 100%;
+        }
+
+        textarea{
+            max-height: 100%;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            outline: none;
+            border: none;
+            padding: 1.5rem 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .text{
+            background-color: #fff;
+            position: absolute;
+            top: 3rem;
+            left: 0;
+            bottom: 0;
+            right: 0; 
+            z-index: -1;
+            padding: 1rem;
+        }
+        
+        .hide{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <button>+ Add Note</button>
+
+    <div class="container">
+
+    </div>
+
+</body>
+<script>
+    const addNote = document.querySelector('button'),
+        container = document.querySelector('.container'),
+        deleteBtns = Array.from(document.querySelectorAll('#delete')),
+        saveBtns = Array.from(document.querySelectorAll('#save'));
+    
+    let counter = localStorage.getItem('counter') ? parseInt(localStorage.getItem('counter')) : 1,
+        notes = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
+    
+    displayOldNotes();
+
+    addNote.addEventListener('click', () => {
+        counter++
+        localStorage.setItem('counter',counter)
+       createNote();
+    })
+
+    function deleteNote(e){
+        const noteDiv = e.parentElement.parentElement
+        noteDiv.remove();
+        console.log(notes)
+        notes.forEach((note, i) => {
+            if(note.id === noteDiv.dataset.id){
+                notes.splice(i, 1);
+                updateStorage(notes);
+            };
+        })
+    }
+
+    function saveText(e){
+        const parent = e.parentElement.parentElement,
+            textarea = parent.querySelector('textarea'),
+            saveDiv = parent.querySelector('.text'),
+            currentNote = {id: parent.dataset.id, text: textarea.value};
+
+        textarea.classList.toggle('hide');
+        saveDiv.innerText = textarea.value;     
+        
+        if(!textarea.classList.contains('hide')){
+            textarea.focus();
+            return
+        };
+
+        notes.forEach((note, i) => {
+            if(note.id === currentNote.id)notes.splice(i, 1);
+        })
+
+        notes.push(currentNote);
+        updateStorage(notes);
+    }
+
+    function updateStorage(notes){
+        localStorage.removeItem('notes')
+        localStorage.setItem('notes', JSON.stringify(notes))  
+    }
+
+    function createNote(text, id){
+        const note = () => {
+            return(
+                `<div class="topbar">
+                    <i 
+                        class="fas fa-save" 
+                        id='save'
+                        onclick="saveText(this)"
+                    ></i>
+                    <i 
+                        class="fas fa-trash-alt" 
+                        id='delete'
+                        onclick="deleteNote(this)"
+                    ></i>
+                </div>
+                <form>
+                    <textarea 
+                        placeholder="Type here..."
+                        class = '${text ? 'hide' : null}'                        
+                    >${text ? text : ''}</textarea>
+                </form>
+                <div class="text">${text ? text : ''}</div> `
+            )
+        },
+            div = document.createElement('div'),
+            dataId = id ? id : counter;
+
+        div.classList.add('note');
+        div.setAttribute('data-id', dataId)
+        div.innerHTML = note();
+        container.appendChild(div);
+    }
+
+    function displayOldNotes(){
+        if(!notes.length)return;
+        notes.forEach(note => createNote(note.text, note.id))
+    }
+</script>
+</html>
