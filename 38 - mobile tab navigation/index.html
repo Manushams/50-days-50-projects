@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Tab Navigation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: rgba(155, 89, 182, 0.7);
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .card {
+            width: 21rem;
+            height: 37rem;
+            min-height: 10rem;
+            background: #fff;
+            border: 3px solid #fff;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-img {
+            height: 90%;
+            width: 100%;
+            position: relative;
+            transition: all .3s ease-in-out;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all .3s ease-in-out;
+            position: absolute;
+        }
+
+        .hide{
+            opacity: 0;
+        }
+
+        .icons {
+            display: flex;
+            height: 10%;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .tab {
+            text-align: center;
+            margin: 0 .5rem;
+            color: rgba(0, 0, 0, 0.589);
+            cursor: pointer;
+            transition: .3s ease-in-out;
+        }
+
+        .tab h4 {
+            font-weight: 500;
+            font-size: .75rem;
+        }
+
+        .tab:hover {
+            color: rgba(155, 89, 182, 0.7);
+        }
+
+        .active {
+            color: rgba(155, 89, 182, 0.7);
+        }
+
+        .show{
+           z-index: 2;
+           opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-img">
+                <img src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80"
+                    alt="" class="hide show">
+
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+                    alt=""
+                    class="hide">
+
+                <img src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1266&q=80"
+                    alt=""
+                    class="hide">
+
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80"
+                    alt=""
+                    class="hide">
+            </div>
+
+            <div class="icons">
+                <div class="tab active">
+                    <i class="fas fa-home"></i>
+                    <h4>Home</h4>
+                </div>
+
+                <div class="tab">
+                    <i class="fas fa-box"></i>
+                    <h4>Work</h4>
+                </div>
+
+                <div class="tab">
+                    <i class="fas fa-book"></i>
+                    <h4>Blog</h4>
+                </div>
+
+                <div class="tab">
+                    <i class="fas fa-users"></i>
+                    <h4>About Us</h4>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+
+    const tabs = Array.from(document.querySelectorAll('.tab')),
+        imgs = Array.from(document.querySelectorAll('img')),
+        cardImg = document.querySelector('.card-img')
+
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => {
+            reset();
+            tab.classList.add('active')
+            imgs[i].classList.add('show')
+        })
+    })
+
+    function reset(){
+        imgs.forEach(img => img.classList.remove('show'))
+        tabs.forEach(tab => tab.classList.remove('active'))
+    }
+</script>
+
+</html>
