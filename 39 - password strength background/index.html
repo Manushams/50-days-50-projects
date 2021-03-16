@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password strength bg</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+        :root{
+            --blur-index: 40px
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .container{
+            background: url('https://images.unsplash.com/photo-1556745757-8d76bdb6984b');
+            width: 100%;
+            height: 100vh;
+            background-position: center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+            position: relative;   
+        }
+
+        .bg-blur{
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            backdrop-filter: blur(var(--blur-index));
+        }
+
+        .card{
+            z-index: 2;
+            background-color: #fff;
+            padding: 2rem 2rem;
+            border-radius: 5px;
+            width: 25rem;
+            min-width: 10rem;
+        }
+
+        .card h4{
+            text-align: center;
+            font-size: 1.6rem;
+        }
+
+        .card p {
+            font-size: .8rem;
+            text-align: center;
+            margin: .2rem 0 1.4rem 0;
+        }
+
+        form{
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.3rem;
+        }
+
+        label{
+            margin-bottom: .4rem;
+        }
+
+        input{
+            height: 2.1rem;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            border: 1.5px solid rgba(0, 0, 0, 0.377);
+            padding: .4rem;
+            font-size: .8rem;
+        }
+
+        input:focus{
+            border: 2px solid #000;
+        }
+
+        .input-field:nth-child(2){
+            margin-bottom: 2rem;
+        }
+
+        button{
+            padding: .5rem ;
+            border: none;
+            outline: none;
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bg-blur"></div>
+        <div class="card">
+            <h4>Image Password Strength</h4>
+            <p>Change the password to see the effect</p>
+
+            <form>
+                <div class="input-field">
+                    <label for="email">Email:</label>
+                    <input placeholder="Type here..." type="email" id="email">
+                </div>
+
+                <div class="input-field">
+                    <label for="password">Password:</label>
+                    <input placeholder="Type here..."  type="password" id="password">
+                </div>
+
+                <button>Submit</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+<script>
+    const input = document.querySelector('#password'),  
+        bgBLur = document.querySelector('.bg-blur')
+    
+    
+    input.addEventListener('input', (e) => {
+        let blurIndex = 40;
+
+        blurIndex = blurIndex - (e.target.value.length * 4)
+        console.log(blurIndex)
+        bgBLur.style.backdropFilter = `blur(${blurIndex}px)`
+    })
+</script>
+</html>
