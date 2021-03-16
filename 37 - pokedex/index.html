@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(90deg, rgb(240, 225, 228), rgb(224, 224, 175));
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: rgb(215, 240, 211);
+            width: 10rem;
+            min-height: 17rem;
+            border-radius: 5px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.455);
+            margin: .8rem;
+        }
+
+        .card-img {
+            height: 50%;
+            width: 7rem;
+            background-color: #fff;
+            border-radius: 50%;
+            /* transform: translateY(-1rem); */
+            user-select: none;
+            position: relative;
+        }
+
+        .card-img img {
+            width: 100%;
+            object-fit: cover;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .id {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.15);
+            width: 60%;
+            border-radius: 2px;
+            padding: .1rem .2rem;
+        }
+
+        .name {
+            margin: .5rem 0;
+        }
+
+        .type {
+            font-size: .9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2 class="title">Pokedex</h2>
+
+        <div class="wrapper">
+            <!-- Cards -->
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const wrapper = document.querySelector('.wrapper'),
+        numberDisplayed = 100,
+        colors = {
+            fire: '#FDDFDF',
+            grass: '#DEFDE0',
+            electric: '#FCF7DE',
+            water: '#DEF3FD',
+            ground: '#f4e7da',
+            rock: '#d5d5d4',
+            fairy: '#fceaff',
+            poison: '#98d7a5',
+            bug: '#f8d5a3',
+            dragon: '#97b3e6',
+            psychic: '#eaeda1',
+            flying: '#F5F5F5',
+            fighting: '#E6E0D4',
+            normal: '#F5F5F5'
+        };
+
+    setIds();    
+
+    function setIds(){
+        let i = 0;
+        const timeInt = setInterval(() => {
+            i++;
+            if(i > numberDisplayed - 1)clearInterval(timeInt);
+            getData(i)
+        }, 500);
+
+    }
+
+    async function getData(id) {
+        const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
+            data = await resp.json();
+
+
+        const [name, imgUrl, type] = [data.name, data.sprites.other.dream_world.front_default, data.types[0].type.name]
+        addCard(imgUrl, id, name, type)
+    }
+
+    function addCard(imgUrl, id, name, type) {
+        const card = (`
+            <div class="card-img">
+                <img 
+                    src="https://pokeres.bastionbot.org/images/pokemon/${id}.png"
+                    alt=""
+                    draggable="false"
+                >
+            </div>
+            <div class="card-content">
+                <h4 class="id">#${displayIDs(id)}</h4>
+                <h3 class="name">${name}</h3>
+                <p class="type">Type: ${type}</p>
+            </div>
+        `);
+
+        const div = document.createElement('div');
+        div.classList.add('card');
+        div.style.backgroundColor = colors[type]
+        div.innerHTML = card;
+
+        wrapper.appendChild(div)
+    }
+
+    function displayIDs(id){
+        if(id < 10)return `00${id}`;
+        if(id < 100)return `0${id}`;
+        else return id
+    }
+
+</script>
+
+</html>
