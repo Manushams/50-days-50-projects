@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback UI Design</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(250, 245, 236);
+        }
+
+        .card{
+            background-color: white;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.205);
+        }
+
+        .feedback{
+            display: flex;
+            flex-direction: column;
+            width: 20rem;
+            min-width: 10rem;
+        }
+
+        .feedback h4{
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .emojis{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .emoji{
+            margin: 0 .3rem;
+            cursor: pointer;
+            padding: .5rem;
+        }
+
+        .emoji:hover{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+        }
+
+        .emojis p{
+            font-size: 1rem;
+        }
+
+        .btn{
+            text-align: center;
+        }
+
+        button{
+            padding: .8rem 1.2rem;
+            outline: none;
+            border: none;
+            background-color: #000;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .active{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+        }
+
+        .hide{
+            display: none;
+        }
+
+        .thankyou{
+            text-align: center;
+        }
+        .thankyou h3{
+            margin: 1rem;
+        }
+
+        .thankyou h1:first-child{
+           color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="card">
+
+        <div class="feedback">
+            <h4>
+                How satisfied are you with our <br>customer support performance?
+            </h4>
+
+            <div class="emojis">
+                <div class="emoji">
+                    😐
+                    <p>Unhappy</p>
+                </div>
+
+                <div class="emoji">
+                    😐
+                    <p>Neutral</p>
+                </div>
+
+                <div class="emoji active">
+                    😁
+                    <p>Satisfied</p>
+                </div>
+            </div>
+
+            <div class="btn">
+                <button>Send Review</button>
+            </div>
+        </div>
+
+        <div class="thankyou hide">
+            <h1 class="heart">❤</h1>
+            <h3>Thank You!</h3>
+            <h3>Feedback: <span class="text"></span></h3>
+            <p>
+                We'll use your feedback to improve our <br> customer support
+            </p>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const emojis = Array.from(document.querySelectorAll('.emoji')),
+        textSpan = document.querySelector('.text'),
+        button = document.querySelector('button'),
+        thankYou = document.querySelector('.thankyou'),
+        feedback = document.querySelector('.feedback');
+
+    let text = null;
+
+    emojis.forEach((em, i) => {
+
+        em.addEventListener('click', () => {
+            reset()
+            em.classList.toggle('active');
+            text = em.querySelector('p').innerText;
+        })
+    })
+
+    function reset(){
+        emojis.forEach(e => e.classList.remove('active'))
+    }
+
+    button.addEventListener('click', () => {
+        thankYou.classList.remove('hide');
+        feedback.classList.add('hide');
+        textSpan.innerText = text;
+    })
+
+
+</script>
+
+</html>
