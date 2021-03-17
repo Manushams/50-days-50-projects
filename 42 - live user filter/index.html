@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live User Filter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card{
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            width: 300px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.418);
+            transition: all .3s ease-in-out;
+        }
+
+        .search{
+            background-color: #3e57db;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+        }
+
+        .search p {
+            margin: .2rem 0 1rem 0;
+            font-size: .8rem;
+        }
+
+        .search input{
+            padding: .5rem;
+            border-radius: 1000px;
+            outline: none;
+            border: none;
+            width: 100%;
+            background-color: #1f3292;
+            color: #fff;
+        }
+
+        .list{
+            min-height: 5rem;
+            max-height: 25rem;
+            overflow-y: scroll;
+            transition: all .3s ease-in-out;
+        }
+
+        .contact{
+            display: flex;
+            align-items: center;
+            padding-left: 1.5rem;
+            color: #000;
+            height: 5.2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.137);
+        }
+
+        .contact img{
+            width: 2.8rem;
+            border-radius: 50%;
+            margin-right: .8rem;
+        }
+
+        .contact p{
+            font-size: .7rem;
+            margin-top: .4rem;
+            opacity: .8;
+        }
+
+        .contact h4{
+            font-weight: bolder;
+            font-size: .95rem;
+        }
+
+        .load{
+            color: #000;
+            z-index: 4;
+            text-align: center;
+            margin: 2rem;
+        }
+        .hide{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="card">
+
+        <div class="search">
+            <h3>Live User Filter</h3>
+            <p>Search by name and/or location</p>
+            <form>
+                <input type="text" placeholder="Search">
+            </form>
+        </div>
+
+        <div class="list">
+            <div class="load">
+                <h3>Loading...</h3>
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+<script>
+    const list = document.querySelector('.list'),
+        load = document.querySelector('.load'),
+        search = document.querySelector('input'),
+        template = (first, last, imgUrl, city, country) => {
+            return(`
+                <img src=${imgUrl} alt="">
+                <div class="details">
+                    <h4>${first} ${last}</h4>
+                    <p>${city}, ${country}</p>
+                </div>
+            `)
+        }
+    
+    async function getData(){
+        const resp = await fetch('https://randomuser.me/api/?results=20'),
+            {results} = await resp.json();
+
+        results.forEach(res => {
+            displayData(res)
+            load.classList.add('hide')            
+        });
+    }
+
+    getData()
+
+    function displayData({name, location, picture}){
+        const contact = document.createElement('div');
+        contact.classList.add('contact');
+        contact.setAttribute('data-info',`${location.country} ${name.first} ${name.last} ${location.city}`)
+        contact.innerHTML = template(name.first, name.last, picture.large, location.city, location.country);
+
+        list.appendChild(contact)
+    }
+
+    search.addEventListener('input', findContact)
+
+    function findContact(e){
+        const searched = e.target.value.toLowerCase(),
+            contacts = Array.from(document.querySelectorAll('.contact'));
+
+        contacts.forEach(contact => {
+            const {info} = contact.dataset;
+
+            if(!info.toLowerCase().includes(searched.toLowerCase())){
+                contact.classList.add('hide')
+            }else{
+                contact.classList.remove('hide')
+            }
+        })
+        
+    }
+</script>
+</html>
