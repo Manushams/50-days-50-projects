@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3d boxes</title>
+    <!-- https://media.giphy.com/media/TXJiSN8vCERuE/giphy.gif -->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button{
+            position: absolute;
+            top: 2%;
+            outline: none;
+            border:none;
+            padding: 1rem;
+            background-color: #f9ca24;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 1px #c79e0a;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        button:active{
+            box-shadow: none;
+            transform: translateY(5px);
+        }
+
+        .boxes{
+            width: 500px;
+            height: 500px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            transition: all .5s ease-in-out;
+        }
+
+        .box{
+            width: 125px;
+            height: 125px;
+            background: url('https://media.giphy.com/media/TXJiSN8vCERuE/giphy.gif');
+            background-repeat: no-repeat;
+            background-size: 500px 500px;
+            transition: all .5s ease-in-out;
+            position: relative;
+        }
+
+        .box::before{
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: .45rem;
+            right: -.45rem;
+            height: .9rem;
+            background-color: #f7a40a;
+            transform: skew(45deg);
+        }
+
+        .box::after{
+            content: '';
+            position: absolute;
+            top: .45rem;
+            bottom: -.45rem;
+            left: 100%;
+            width: .9rem;
+            background-color: #ecc272;
+            transform: skewY(45deg);
+        }
+
+        .boxes.big {
+            width: 600px;
+            height: 600px;
+            }
+        
+        .boxes.big .box {
+            transform: rotateZ(360deg);
+        }
+    </style>
+</head>
+<body>
+    <button>Show Magic</button>
+
+        <div class="boxes big">
+        </div>
+
+</body>
+
+<script>
+    const boxesContainer = document.querySelector('.boxes'),
+        btn = document.querySelector('button');
+
+    btn.addEventListener('click', () => {
+        boxesContainer.classList.toggle('big')
+    })
+    
+    function createBoxes(){   
+        for(let i=0; i<4; i++){
+            for(let j=0;j<4; j++){
+                const box = document.createElement('div');
+                box.classList.add('box');
+
+                box.style.backgroundPosition = `${-j*125}px ${-i*125}px`
+                boxesContainer.appendChild(box)
+
+            }
+        }
+    }
+
+    createBoxes()
+</script>
+
+</html>
