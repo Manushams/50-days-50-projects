@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(219, 219, 250);
+            font-family: Montserrat regular, sans-serif;
+        }
+
+        .card{
+            background: #fff;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .question{
+            text-align: center;
+            margin: 3rem auto;
+            font-size: 1.4rem;
+            width: 90%;
+        }
+
+        form{
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-field{
+            margin-bottom: 1rem;
+        }
+
+        .input-field input{
+            border-radius: 50%;
+        }
+
+        label{
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        button{
+            padding: .9rem;
+            outline: none;
+            border: none;
+            background: rgb(156, 32, 238);
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3 class="question">Which language runs in a web browser?</h3>
+        <form>
+            <div class="input-field">
+                <input type="radio" id="1" name="answer">
+                <label for="1">Java</label>
+            </div>
+            <div class="input-field">
+                <input type="radio" id="2" name="answer"> 
+                <label for="2">C</label>
+            </div>
+            <div class="input-field">
+                <input type="radio" id="3" name="answer">
+                <label for="3">Python</label>
+            </div>
+            <div class="input-field">
+                <input type="radio" id="4" name="answer">
+                <label for="4">JavaScript</label>
+            </div>
+        </form>
+        <button>Submit</button>
+    </div>
+</body>
+<script>
+    const submit = document.querySelector('button'),
+        radios = document.querySelectorAll('input'),
+        labels = document.querySelectorAll('label'),
+        questionDisplay = document.querySelector('.question'),
+        form = document.querySelector('form'),
+        answers = [],
+        questions = [
+            {
+                question: 'What does CSS stand for?',
+                options: ['Central Style Sheets','Cascading Style Sheets', 'Cascading Simple Sheets', 'Cars SUVs Sailboats']
+            },
+            {
+                question: 'What does HTML stand for?',
+                options: ['Hypertext Markup Language','Hypertext Markdown Language', 'Hyperloop Machine Language', 'Helicopters Terminals Motorboats Lamborginis']
+            },
+            {
+                question: 'What year was JavaScript launched?',
+                options: ['1996','1995', '1994', 'none of the above']
+            }
+        ];
+    let counter = 0;
+
+    submit.addEventListener('click', () => {
+        if(counter >= 4)location.reload();
+
+        counter++;
+        radios.forEach((radio, i) => {
+            if(radio.checked)answers.push(labels[i].innerText);
+        })
+        changeQuestion();        
+    })
+
+    function changeQuestion(){
+        if(counter >=4){
+            submit.innerText = 'Start Over'
+            checkAnswers()
+            return;
+        }
+        const current = questions[counter - 1];
+        questionDisplay.innerText = current.question;
+        
+        labels.forEach((label, i) => {
+            label.innerText = current.options[i]
+        })
+
+        radios.forEach(r => r.checked = false)
+    }
+
+    function checkAnswers(){
+        const correctAnswers = [
+            'JavaScript',
+            'Cascading Style Sheets',
+            'Hypertext Markup Language',
+            '1995'
+        ]
+        let score = 0;
+
+        correctAnswers.forEach(correct => {
+            if(answers.includes(correct))score++;
+        })
+        
+        displayScore(score)
+    }
+
+    function displayScore(score){
+        questionDisplay.innerText = `Your score is ${score}/4`
+
+        form.remove()
+    }
+</script>
+</html>
