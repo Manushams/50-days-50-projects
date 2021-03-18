@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Range Slider</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: rgb(236, 243, 248);
+        }
+
+        h3{
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        form{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);          
+        }
+
+        label{
+            background-color: #fff;
+            padding: .4rem 1.3rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.491);
+            position: absolute;
+            top: -220%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .range{
+            appearance: none;
+            width: 20rem;
+            height: 13px;
+            background-color: rgb(153, 0, 255);
+            border-radius: 1000px;
+            outline: none;
+            border: none;
+            margin-bottom: .4rem;
+        }
+
+        .range::-webkit-slider-thumb{
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border-radius: 50%;
+            border: 2px solid rgb(138, 11, 223);
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h3>Custom Range Slider</h3>
+
+    <form>
+        <label>50</label>
+        <input 
+            type="range"
+            max="100"
+            min="0"
+            value="50"
+            class="range"
+        >
+    </form>
+    
+</body>
+<script>
+    const range = document.querySelector('.range'),
+        label = document.querySelector('label');
+
+    let isMouseDown = false,
+        initPos = null
+    
+    range.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        initPos = e.offsetX;
+    })
+
+    range.addEventListener('mousemove', (e) => {
+        if(isMouseDown){
+            label.style.left = `${e.offsetX}px`
+            if(e.offsetX < 10)label.style.left = `10px`;
+            if(e.offsetX > 310)label.style.left = `310px`;
+            label.innerText = range.value
+        }
+        
+    })
+
+    range.addEventListener('mouseup', () => {
+        isMouseDown = false
+    })
+
+</script>
+</html>
