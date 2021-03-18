@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Mobile Navigation</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Montserrat regular, sans-serif;
+        }
+
+        img{
+            width: 10rem;
+            margin-bottom: 1rem;
+        }
+        
+        h3{
+            text-align: center;
+        }
+
+        .menu-btn{
+            outline: none;
+            border: none;
+            font-size: 2rem;
+            position: absolute;
+            top: .5rem;
+            left: 1rem;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background: rgb(255, 255, 255);
+            min-width: 21rem;
+            width: 52%;
+            max-width: 30rem;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 5;
+            transform: translateX(-100%);
+            transition: all .3s ease-in-out .6s;
+        }
+
+        .bg1{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            min-width: 23rem;
+            width: calc(52% + 3rem);
+            max-width: 32rem;
+            background-color: rgb(229, 9, 20);
+            z-index: 2;
+            transform: translateX(-100%);
+            transition: all .3s ease-in-out .3s;
+        }
+
+        .bg2{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            min-width: 25rem;
+            width: calc(52% + 5rem);
+            max-width: 34rem;
+            background-color: rgb(34, 31, 31);
+            z-index: 1;
+            transform: translateX(-100%);
+            transition: all .3s ease-in-out ;
+        }
+
+        li{
+            list-style: none;
+            text-transform: uppercase;
+        }
+
+        .brand{
+            display: flex;
+            justify-content: space-between;
+            color: rgb(128, 128, 128);
+            margin-bottom: 1rem;
+        }
+
+        .close-btn{
+            font-size: 3rem;
+            padding: 0;
+            transform: translateY(-.7rem);
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .nav-item, .sub-item{
+            margin-bottom: 1rem;
+            font-size: .9rem;
+        }
+
+        .sub-item{
+            padding-left: 2rem;
+        }
+
+        .visible{
+            transform: translateX(0%);
+        }
+
+    </style>
+</head>
+<body>
+    <button class="menu-btn">
+        &#x2630;
+    </button>
+
+    <div class="bg1"></div>
+    <div class="bg2"></div>
+    <nav>
+        <div class="brand">
+            <img src="https://logos-download.com/wp-content/uploads/2016/03/Netflix_logo.png" alt="">
+            <span class="close-btn">&times;</span>
+        </div>
+
+        <ul class="navbar-nav">
+            <li class="nav-item">Teams</li>
+            <li class="nav-item">Locations</li>
+            <li class="nav-item">Life at netflix</li>
+            <li>
+                <ul class="life">
+                    <li class="sub-item">NETFLIX CULTURE MEMO</li>
+                    <li class="sub-item">WORK LIFE BALANCE</li>
+                    <li class="sub-item">INCLUSION & DIVERSITY</li>
+                    <li class="sub-item">BLOG</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <img src="https://logos-download.com/wp-content/uploads/2016/03/Netflix_logo.png" alt="">
+        <h3>Mobile Navigation</h3>
+    </div>
+</body>
+<script>
+    const button = document.querySelector('.menu-btn'),
+        close = document.querySelector('.close-btn'),
+        bg1 = document.querySelector('.bg1'),
+        bg2 = document.querySelector('.bg2'),
+        nav = document.querySelector('nav');
+
+    button.addEventListener('click', () => {
+        nav.classList.add('visible');
+        bg1.classList.add('visible');
+        bg2.classList.add('visible');      
+        bg2.style.transitionDelay = '0s'        
+        bg1.style.transitionDelay = '0.3s'        
+        nav.style.transitionDelay = '0.6s'      
+    })
+
+    close.addEventListener('click', () => {
+        nav.classList.remove('visible');
+        bg1.classList.remove('visible');
+        bg2.classList.remove('visible');
+        nav.style.transitionDelay = '0s'        
+        bg1.style.transitionDelay = '0.3s'        
+        bg2.style.transitionDelay = '0.6s'        
+    })
+</script>
+</html>
