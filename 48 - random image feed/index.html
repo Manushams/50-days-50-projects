@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: Montserrat;
+        }
+
+        .container{
+            width: 97%;
+            max-width: 1000px;
+            margin: 1rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h3{
+            font-weight: bolder;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .images{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .images img{
+            margin: .5rem;
+            height: 300px;
+            width: 300px;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Random Image Feed</h3>
+
+        <div class="images">
+        </div>
+    </div>
+</body>
+<script>
+    const imagesContainer = document.querySelector('.images'),
+        numberOfImgs = 21,
+        unsplashURL = 'https://source.unsplash.com/random/';
+
+    function getRandomSize(){
+        return (Math.floor(Math.random()*10) + 300)
+    }
+
+    for(let i=0; i<numberOfImgs; i++){
+        const img = document.createElement('img');
+        img.src = `${unsplashURL}${getRandomSize()}x${getRandomSize()}`
+        imagesContainer.appendChild(img)
+    }
+</script>
+</html>
