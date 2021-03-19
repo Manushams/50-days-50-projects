@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the insect</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #516dff;
+            font-family: 'Press Start 2P', sans-serif;
+            color: #fff;
+            line-height: 1.6;
+            overflow: hidden;
+            transition: all .3s ease-in-out;
+        }
+
+        .container{
+            transition: all .3s ease-in-out;
+        }
+        
+        #start{
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #start h3{
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #start button{
+            padding: 1rem 2rem;
+            background-color: #fff;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-family: 'Press Start 2P', sans-serif;
+            color: #516dff;
+            cursor: pointer;
+        }
+
+        #choice{
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s ease-in-out;
+        }
+
+        #choice h3{
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .insects{
+            display: flex;
+            text-align: center;
+            justify-content: space-evenly;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .insect{
+            border: 3px solid #fff;
+            width: 150px;
+            padding: .5rem;
+            cursor: pointer;
+        }
+
+        img{
+            width: 100px;
+        }
+
+        .insect:hover{
+            background-color: #fff;
+            color: #516dff;
+        }
+
+        main{
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 2rem;
+        }
+
+        .details{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .insect-game{
+            position: absolute;
+            width: 100px;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .game{
+            height: calc(100% - 2rem);
+            position: relative;
+        }
+
+        .notification{
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.397);
+            width: 100%;
+            padding: 1rem;
+            display: none;
+        }
+
+        .up{
+            margin-top: -100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section id="start">
+            <h3>Catch The Insect</h3>
+            <div class="btn">
+                <button
+                    onclick="scrollDown()"
+                >Play Game</button>
+            </div>
+        </section>
+
+        <section id="choice">
+            <h3>What is your "favorite" insect?</h3>
+            <div class="insects">
+                <div class="insect">
+                    <p>Fly</p>
+                    <img src="http://pngimg.com/uploads/fly/fly_PNG3946.png" alt="">
+                </div>
+                <div class="insect">
+                    <p>Mosquito</p>
+                    <img src="http://pngimg.com/uploads/mosquito/mosquito_PNG18175.png" alt="">
+                </div>
+                <div class="insect">
+                    <p>Spider</p>
+                    <img src="http://pngimg.com/uploads/spider/spider_PNG12.png" alt="">
+                </div>
+                <div class="insect">
+                    <p>Roach</p>
+                    <img src="http://pngimg.com/uploads/roach/roach_PNG12163.png" alt="">
+                </div>
+            </div>
+        </section>
+
+        <main>
+            
+            <div class="details">
+                <div class="time">
+                    <h3>Time: <span id="timer">00:00</span></h3>
+                </div>
+                <div class="score">
+                    <h3>Score: <span id="score">0</span></h3>
+                </div>
+            </div>
+            
+            <div class="game"></div>
+            <div class="notification">
+                Are you annnoyed yet? <br>
+                You are playing an impossible game!!
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    const insects = document.querySelectorAll('.insect'),
+        container = document.querySelector('.container'),
+        choice = document.querySelector('#choice'),
+        game = document.querySelector('.game');
+    let selectedInsect,
+        numberOfInsects = 1,
+        score = 0;
+
+    insects.forEach((insect, i) => {
+        insect.addEventListener('click', () => {
+            selectedInsect = insect.querySelector('img').src;
+            choice.classList.add('up')
+            startGame()
+        })
+    })
+
+    function startGame(){
+        addInsect()
+        startClock()
+    }
+
+    function addInsect(){
+        const insects = Array.from(document.querySelectorAll('.insect-game'));
+        let remained = numberOfInsects < 2 ? numberOfInsects : 2;
+
+        if(insects.length >= 19)return;
+        
+        const add = setInterval(() => {
+            const insect = document.createElement('img');
+            insect.src = selectedInsect;
+            insect.classList.add('insect-game')
+            insect.style.top = randomPosition() + '%';
+            insect.style.left = randomPosition() + '%';
+            insect.onclick = () => removeInsect(insect);
+            insect.draggable = false;
+            game.appendChild(insect)
+
+            remained--;
+            if(remained === 0)clearInterval(add);
+        }, 1000);
+    }
+
+    function randomPosition(){
+        return( Math.floor(Math.random() * 95));
+    }
+
+    function removeInsect(insect){
+        numberOfInsects++;
+        score++;
+        updateScore()
+        addInsect()
+        insect.remove()
+
+        if(score >= 20){
+            const notification = document.querySelector('.notification');
+            notification.style.display = 'block'
+        }
+    }
+
+    function updateScore(){
+        const scoreEl = document.querySelector('#score');
+        scoreEl.innerText = score
+    }
+
+    function startClock(){
+        const timer = document.querySelector('#timer')
+        let seconds = 0,
+            mins = 0
+        setInterval(() => {
+            seconds++;
+            if(seconds === 60){
+                seconds = 0;
+                mins++
+            }
+            timer.innerText = `${timeDisplayed(mins)}:${timeDisplayed(seconds)}`
+        }, 1000);
+    }
+
+    function timeDisplayed(time){
+        if(time < 10) return `0${time}`;
+        else return time
+    }
+
+    function scrollDown(){
+       container.classList.add('up')
+    }
+    
+</script>
+</html>

@@ -32,7 +32,7 @@
         .container h1{
             position: absolute;
             top: 20%;
-            font-size: clamp(6rem, 10rem, 10rem);
+            font-size: 10rem;
             opacity: .18;            
             user-select: none;
             z-index: -1;
@@ -63,7 +63,6 @@
         }
 
         input:focus{
-            /* border: 3px solid rgba(166, 42, 207, 0.336);  */
             transform: scale(1.08);
             box-shadow: 0 0px 20px rgba(0, 0, 0, 0.399);
         }
@@ -148,6 +147,7 @@
 
     function saveTodo(e){
         if(e.code === 'Enter'){
+            window.event.preventDefault()
             e.preventDefault();
             if(e.target.value === '')return;
 
@@ -162,7 +162,6 @@
         const div = document.createElement('div');
         div.classList.add('todo');
         if(e.completed)div.classList.add('completed');
-
         div.innerText = e.target ? e.target.value : e.text;
         div.onclick = () => done(div);
         div.oncontextmenu = () => deleteTodo(div);
