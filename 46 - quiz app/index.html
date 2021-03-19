@@ -91,7 +91,7 @@
                 <label for="4">JavaScript</label>
             </div>
         </form>
-        <button>Submit</button>
+        <button disabled>Submit</button>
     </div>
 </body>
 <script>
@@ -121,11 +121,19 @@
         if(counter >= 4)location.reload();
 
         counter++;
+
         radios.forEach((radio, i) => {
             if(radio.checked)answers.push(labels[i].innerText);
         })
         changeQuestion();        
     })
+
+    radios.forEach(radio => {
+        radio.addEventListener('click', () => {
+            submit.disabled = false
+        })
+    })
+
 
     function changeQuestion(){
         if(counter >=4){
@@ -141,6 +149,7 @@
         })
 
         radios.forEach(r => r.checked = false)
+        submit.disabled = true
     }
 
     function checkAnswers(){
